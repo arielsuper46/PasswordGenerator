@@ -1,6 +1,7 @@
 import PasswordGenerator from "./components/PasswordGenerator";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import "./index.css"; // Asegúrate de que este archivo esté correctamente enlazado
 
 function App() {
   return (
