@@ -1,17 +1,17 @@
-import { FC } from "react";
+import React from "react";
 
 interface PasswordDisplayProps {
   password: string;
   onCopy: () => void;
 }
 
-const PasswordDisplay: FC<PasswordDisplayProps> = ({ password, onCopy }) => (
-  <div className="result">
-    <div className="result__viewbox" id="result">
-      {password}
-      <i className="bi bi-copy" onClick={onCopy}></i>
+const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, onCopy }) => {
+  return (
+    <div className="result">
+      <div className="result__viewbox">{password}</div>
+      <button onClick={onCopy}>Copiar</button>
     </div>
-  </div>
-);
+  );
+};
 
 export default PasswordDisplay;

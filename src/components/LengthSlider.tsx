@@ -1,21 +1,20 @@
-import { FC } from "react";
+import React from "react";
 
 interface LengthSliderProps {
   length: number;
   onChange: (newLength: number) => void;
 }
 
-const LengthSlider: FC<LengthSliderProps> = ({ length, onChange }) => {
+const LengthSlider: React.FC<LengthSliderProps> = ({ length, onChange }) => {
   return (
-    <div className="length range__slider" data-min="5" data-max="32">
-      <div className="length__title field-title">Longitud: {length}</div>
+    <div className="length">
+      <label className="length__title">Longitud: {length}</label>
       <input
-        id="slider"
         type="range"
-        min="5"
+        min="4"
         max="32"
         value={length}
-        onChange={(e) => onChange(parseInt(e.target.value))}
+        onChange={(e) => onChange(Number(e.target.value))}
       />
     </div>
   );

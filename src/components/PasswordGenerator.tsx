@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import LengthSlider from "./LengthSlider";
 import Checkbox from "./Checkbox";
 import PasswordDisplay from "./PasswordDisplay";
+import GenerateButton from "./GenerateButton";
 
 interface PasswordGeneratorProps {
   defaultLength?: number;
 }
 
 function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
-  const [password, setPassword] = useState<string>(generateRandomPassword(defaultLength));
+  const [password, setPassword] = useState<string>("");
   const [length, setLength] = useState<number>(defaultLength);
   const [includeLowercase, setIncludeLowercase] = useState<boolean>(true);
   const [includeUppercase, setIncludeUppercase] = useState<boolean>(false);
   const [includeNumber, setIncludeNumber] = useState<boolean>(true);
   const [includeSymbol, setIncludeSymbol] = useState<boolean>(false);
+
+  useEffect(() => {
+    updatePassword();
+  }, []);
 
   function generateRandomPassword(length: number): string {
     const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
@@ -66,6 +71,8 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
         <Checkbox label="Incluir Números" checked={includeNumber} onChange={(checked) => { setIncludeNumber(checked); updatePassword(); }} />
         <Checkbox label="Incluir Símbolos" checked={includeSymbol} onChange={(checked) => { setIncludeSymbol(checked); updatePassword(); }} />
       </div>
+
+      <GenerateButton onClick={updatePassword} />
     </div>
   );
 }
