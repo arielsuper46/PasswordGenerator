@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import LengthSlider from "./LengthSlider";
 import Checkbox from "./Checkbox";
@@ -17,11 +17,8 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
   const [includeNumber, setIncludeNumber] = useState<boolean>(true);
   const [includeSymbol, setIncludeSymbol] = useState<boolean>(false);
 
-  useEffect(() => {
-    updatePassword();
-  }, []);
-
-  function generateRandomPassword(length: number): string {
+  // Definir generateRandomPassword usando useCallback
+  const generateRandomPassword = useCallback((length: number): string => {
     const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numberChars = "0123456789";
@@ -41,15 +38,14 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
     }
 
     return newPassword;
-  }
+  }, [includeLowercase, includeUppercase, includeNumber, includeSymbol]);
 
-  const updatePassword = () => {
+  useEffect(() => {
     setPassword(generateRandomPassword(length));
-  };
+  }, [length, includeLowercase, includeUppercase, includeNumber, includeSymbol, generateRandomPassword]);
 
   const handleLengthChange = (newLength: number) => {
     setLength(newLength);
-    updatePassword();
   };
 
   const copyToClipboard = () => {
@@ -66,13 +62,29 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
 
       <div className="settings">
         <span className="settings__title field-title">Configuraciones:</span>
-        <Checkbox label="Incluir Minúsculas" checked={includeLowercase} onChange={(checked) => { setIncludeLowercase(checked); updatePassword(); }} />
-        <Checkbox label="Incluir Mayúsculas" checked={includeUppercase} onChange={(checked) => { setIncludeUppercase(checked); updatePassword(); }} />
-        <Checkbox label="Incluir Números" checked={includeNumber} onChange={(checked) => { setIncludeNumber(checked); updatePassword(); }} />
-        <Checkbox label="Incluir Símbolos" checked={includeSymbol} onChange={(checked) => { setIncludeSymbol(checked); updatePassword(); }} />
+        <Checkbox
+          label="Incluir Minúsculas"
+          checked={includeLowercase}
+          onChange={(checked) => setIncludeLowercase(checked)}
+        />
+        <Checkbox
+          label="Incluir Mayúsculas"
+          checked={includeUppercase}
+          onChange={(checked) => setIncludeUppercase(checked)}
+        />
+        <Checkbox
+          label="Incluir Números"
+          checked={includeNumber}
+          onChange={(checked) => setIncludeNumber(checked)}
+        />
+        <Checkbox
+          label="Incluir Símbolos"
+          checked={includeSymbol}
+          onChange={(checked) => setIncludeSymbol(checked)}
+        />
       </div>
 
-      <GenerateButton onClick={updatePassword} />
+      <GenerateButton onClick={() => setPassword(generateRandomPassword(length))} />
     </div>
   );
 }
