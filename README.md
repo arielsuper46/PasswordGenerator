@@ -37,7 +37,7 @@ const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, onCopy }) =
 export default PasswordDisplay;
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:** Este código define el componente `PasswordDisplay`, que se encarga de mostrar la contraseña generada y de permitir su copia al portapapeles.
 
@@ -59,7 +59,7 @@ export default PasswordDisplay;
 <LengthSlider length={length} onChange={handleLengthChange} />
 <Checkbox label="Incluir Mayúsculas" checked={includeUppercase} onChange={setIncludeUppercase} />
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  El código organiza la lógica de la generación de contraseñas en componentes pequeños, como LengthSlider para controlar la longitud y Checkbox para manejar los criterios de inclusión de mayúsculas, minúsculas, números y símbolos.
 
@@ -82,7 +82,7 @@ export default PasswordDisplay;
 </div>
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  En este fragmento de código se usan etiquetas JSX para estructurar la interfaz de usuario, combinando elementos HTML con la lógica de React.
 - **¿Cómo?:**  JSX se utiliza para representar los controles y la visualización de la contraseña generada. Este código se renderiza dentro de los componentes React.
@@ -100,7 +100,7 @@ export default PasswordDisplay;
 <label>{length}</label>
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Las llaves en JSX permiten insertar dinámicamente valores de JavaScript, como el valor de la longitud de la contraseña o los criterios seleccionados.
 
@@ -119,7 +119,7 @@ export default PasswordDisplay;
 <Checkbox label="Incluir Mayúsculas" checked={includeUppercase} onChange={setIncludeUppercase} />
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Los props son utilizados para pasar valores entre componentes. En este caso, el valor de la longitud de la contraseña y los criterios de inclusión se pasan a los componentes hijos.
 
@@ -139,7 +139,7 @@ export default PasswordDisplay;
 {password === "error_too_short" && <div>La contraseña es demasiado corta.</div>}
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Se utiliza la renderización condicional para mostrar mensajes de advertencia si la contraseña no cumple con los requisitos.
 
@@ -159,7 +159,7 @@ export default PasswordDisplay;
 <Checkbox label="Incluir Números" checked={includeNumber} onChange={setIncludeNumber} />
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Este fragmento de código renderiza los controles necesarios para personalizar la contraseña.
 
@@ -179,7 +179,7 @@ export default PasswordDisplay;
 <Checkbox checked={includeLowercase} onChange={setIncludeLowercase} />
 
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Este componente Checkbox recibe el valor del estado a través de props y ejecuta una función cuando el usuario interactúa con él.
 
@@ -201,7 +201,7 @@ export default PasswordDisplay;
   <PasswordDisplay />
 </PasswordGenerator>
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:** La estructura de los componentes en React forma un árbol, donde el componente principal `PasswordGenerator` contiene otros componentes como `LengthSlider` y `PasswordDisplay`.
 
@@ -219,7 +219,7 @@ export default PasswordDisplay;
 ```typescript
 <button onClick={updatePassword}>Generar Contraseña</button>
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  Este código captura los eventos de interacción del usuario, como el clic en el botón para generar la contraseña, y ejecuta la función updatePassword.
 
@@ -238,7 +238,7 @@ export default PasswordDisplay;
 const [password, setPassword] = useState("");
 const [length, setLength] = useState(16);
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  En este código, se usan los hooks useState para manejar el estado de la contraseña (password) y de la longitud (length) de la contraseña generada.
 
@@ -257,7 +257,7 @@ const [length, setLength] = useState(16);
   <PasswordDisplay password={password} />
 </PasswordGenerator>
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  En lugar de mantener el estado de la contraseña en el componente hijo `(PasswordDisplay)`, el estado se eleva al componente padre `(PasswordGenerator)`, que lo pasa como `prop` a los componentes hijos.
 
@@ -277,7 +277,7 @@ const copyToClipboard = () => {
   navigator.clipboard.writeText(password);
 };
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  `useRef` se utiliza para crear una referencia a un elemento del DOM (el botón de copiar). Al hacer clic en el botón, la contraseña generada se copia al portapapeles.
 
@@ -300,7 +300,7 @@ useEffect(() => {
   }
 }, [password]);
 ```
-## Explicación
+### Explicación
 
 - **¿Qué?:**  En este código, `useEffect` se utiliza para mostrar una notificación de éxito cada vez que se actualiza la contraseña.
 
