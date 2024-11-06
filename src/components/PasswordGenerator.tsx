@@ -17,7 +17,7 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
   const [includeNumber, setIncludeNumber] = useState<boolean>(true);
   const [includeSymbol, setIncludeSymbol] = useState<boolean>(false);
 
-  // Definir generateRandomPassword usando useCallback
+  // Memorizar la función usando useCallback para evitar recrearla en cada renderizado
   const generateRandomPassword = useCallback((length: number): string => {
     const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -30,7 +30,7 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
     if (includeNumber) chars += numberChars;
     if (includeSymbol) chars += symbolChars;
 
-    if (chars.length === 0) return "";
+    if (chars.length === 0) return ""; // Si no hay opciones seleccionadas
 
     let newPassword = "";
     for (let i = 0; i < length; i++) {
@@ -40,16 +40,28 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
     return newPassword;
   }, [includeLowercase, includeUppercase, includeNumber, includeSymbol]);
 
-  useEffect(() => {
-    setPassword(generateRandomPassword(length));
+  // Función para actualizar la contraseña con las validaciones
+  const updatePassword = useCallback(() => {
+    if (!includeLowercase && !includeUppercase && !includeNumber && !includeSymbol) {
+      setPassword("error_no_options");
+    } else if (length < 8) {
+      setPassword("error_too_short");
+    } else {
+      setPassword(generateRandomPassword(length)); // Generación normal de contraseña
+    }
   }, [length, includeLowercase, includeUppercase, includeNumber, includeSymbol, generateRandomPassword]);
 
+  // useEffect para actualizar la contraseña cuando cambian los criterios
+  useEffect(() => {
+    updatePassword(); // Se ejecuta solo cuando cambian las configuraciones o la longitud
+  }, [length, includeLowercase, includeUppercase, includeNumber, includeSymbol, updatePassword]);
+
   const handleLengthChange = (newLength: number) => {
-    setLength(newLength);
+    setLength(newLength); // Actualiza la longitud y actualiza la contraseña
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(password);
+    navigator.clipboard.writeText(password); // Copiar contraseña al portapapeles
     toast.success("Contraseña copiada al portapapeles");
   };
 
@@ -84,7 +96,8 @@ function PasswordGenerator({ defaultLength = 16 }: PasswordGeneratorProps) {
         />
       </div>
 
-      <GenerateButton onClick={() => setPassword(generateRandomPassword(length))} />
+      {/* Llamamos a updatePassword al hacer clic */}
+      <GenerateButton onClick={updatePassword} />
     </div>
   );
 }

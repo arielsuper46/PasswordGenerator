@@ -1,5 +1,4 @@
 import React from "react";
-import { useRef } from "react";
 
 interface PasswordDisplayProps {
   password: string;
@@ -7,30 +6,25 @@ interface PasswordDisplayProps {
 }
 
 const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, onCopy }) => {
-  const passwordRef = useRef<HTMLDivElement>(null);
-  const minLength = 7;
-
-  const handleCopy = () => {
-    if (passwordRef.current) {
-      const passwordText = passwordRef.current.innerText;
-      navigator.clipboard.writeText(passwordText).then(() => {
-        onCopy();
-      });
-    }
-  };
+  let message = "";
+  if (password === "error_no_options") {
+    message = "Por favor selecciona al menos una opción para generar una contraseña.";
+  } else if (password === "error_too_short") {
+    message = "Contraseña demasiado corta.";
+  }
 
   return (
     <div className="result">
-      <div ref={passwordRef} className="result__viewbox">
-        {password.length < minLength ? (
-          <span style={{ color: "red" }}>Contraseña demasiado corta</span>
-        ) : (
-          password
-        )}
-      </div>
-      <button onClick={handleCopy}>
-        <img height={25} src="img/CB.png" alt="Copiar contraseña" />
-      </button>
+      {message ? (
+        <div className="result__error">{message}</div>
+      ) : (
+        <>
+          <div className="result__viewbox">{password}</div>
+          <button onClick={onCopy}>
+            <img height={25} src="img/CB.png" alt="Copiar contraseña" />
+          </button>
+        </>
+      )}
     </div>
   );
 };
