@@ -8,9 +8,9 @@ interface PasswordDisplayProps {
 const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, onCopy }) => {
   let message = "";
   if (password === "error_no_options") {
-    message = "Por favor selecciona al menos una opción para generar una contraseña.";
+    message = "Por favor selecciona una opción";
   } else if (password === "error_too_short") {
-    message = "Contraseña demasiado corta.";
+    message = "Contraseña demasiado corta";
   }
 
   return (
